@@ -9,6 +9,6 @@ public class ForoHub {
 	public static void main(String[] args) {
 		SpringApplication.run(ForoHub.class, args);
 	}
-
-}
- 
+  
+} 
+   

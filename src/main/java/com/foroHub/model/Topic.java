@@ -1,9 +1,6 @@
 package com.foroHub.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,14 +9,35 @@ public class Topic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String titulo; 
+
+    private Integer year; 
+    private String titulo;
     private String mensaje;
-    private LocalDateTime fechaCreacion; 
+
+    @ManyToOne
+    @JoinColumn(name = "autor_id")
+    private Author autor;
+
+    @ManyToOne
+    @JoinColumn(name = "curso_id")
+    private Curso curso;
+
+    private LocalDateTime fechaCreacion;
+
+    
     private String status;
-    private Integer autorId;
-    private Integer cursoId; 
-    
-    
+
+    public Topic() {
+    }
+
+    public Topic(TopicDTO topicDTO) {
+        this.titulo = topicDTO.getTitulo();
+        this.mensaje = topicDTO.getMensaje();
+        this.fechaCreacion = LocalDateTime.now();
+        this.status = "activo"; 
+    }
+
+
     public Integer getId() {
         return id;
     }
@@ -44,6 +62,22 @@ public class Topic {
         this.mensaje = mensaje;
     }
 
+    public Author getAutor() {
+        return autor;
+    }
+
+    public void setAutor(Author autor) {
+        this.autor = autor;
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+
     public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }
@@ -58,21 +92,5 @@ public class Topic {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Integer getAutorId() {
-        return autorId;
-    }
-
-    public void setAutorId(Integer autorId) {
-        this.autorId = autorId;
-    }
-
-    public Integer getCursoId() {
-        return cursoId;
-    }
-
-    public void setCursoId(Integer cursoId) {
-        this.cursoId = cursoId;
     }
 }
